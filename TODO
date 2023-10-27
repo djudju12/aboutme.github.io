@@ -1,10 +1,16 @@
 dt-microsservicos:
-  + autenticacao
-  - products
+  + products
   - orders
   - gateway
 
+inverse-binarutree:
+  - adicionar imagem para a arvore
+  - adicionar os gifs e o codigo fonte
+
 Todo:
-  - terminagir o projeto dt-microsservicos
+  - dt-microsservicos
   - adicionar post sobre JWT
   - quando tiver post sobre JWT adicionar referencia em dt-microsservicos
+  - adicionar link para o src code pelo template dos projetos
+  - projeto golang simulador de automato
+  - huffman tree

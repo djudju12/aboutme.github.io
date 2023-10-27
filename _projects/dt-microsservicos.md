@@ -3,7 +3,8 @@ layout: project
 title: "Desafio Técnico: Microsserviços em Java"
 date: 2023-06-31
 ready: true
-# details: "com Spring Boot"
+src: "https://github.com/djudju12"
+details: "Autenticação"
 ---
 
 Esse projeto foi desenvolvido para o programa de bolsas da Compass UOL. Consiste em uma API que simula um e-commerce e permite o gerenciamento de produtos, pedidos e autenticação do usuário. 
@@ -88,7 +89,6 @@ public class SecurityController {
         this.authService = authService;
     }
 
-
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginDto loginDto){
         // public class LoginDto {
@@ -113,7 +113,7 @@ public class SecurityController {
 }
 ```
 
-O controller é responsável por receber as requisições e retornar as respostas. Quem fará o trabalho de autenticação é o service:
+O controller é responsável por receber as requisições e retornar as respostas. Quem fará de fato o trabalho de autenticação é o service:
 
 ```java
 @Service
@@ -143,3 +143,5 @@ public class AuthServiceImpl implements AuthService {
     }
 }
 ```
+
+Concluindo, o usuário envia as credenciais para o endpoint de login, o service autentica o usuário e gera o token. O token é retornado para o usuário e ele pode utilizá-lo para acessar os endpoints protegidos.
