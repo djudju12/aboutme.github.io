@@ -1,5 +1,10 @@
+dt-microsservicos:
+  + autenticacao
+  - products
+  - orders
+  - gateway
 
 Todo:
-  - terminar o projeto dt-microsservicos
+  - terminagir o projeto dt-microsservicos
   - adicionar post sobre JWT
   - quando tiver post sobre JWT adicionar referencia em dt-microsservicos
