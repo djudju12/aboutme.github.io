@@ -4,7 +4,7 @@ title: "Meu Blog"
 nositetitle: true
 ---
 
-Olá! Meu nome é Jonathan e este é o meu blog, sinta-se à vontade para explorá-lo. Na seção de **posts** você vai encontrar um conteúdo diverso, onde eu falo sobre qualquer que eu achei interessante. Já a seção de **projects** é reservada apenas para falar de algum projeto específico que eu estou trabalhando.
+Olá! Meu nome é Jonathan e este é o meu blog, sinta-se à vontade para explorá-lo. Na seção de **posts** você vai encontrar um conteúdo diverso, onde eu falo sobre qualquer assunto que eu achei interessante. Já a seção de **projects** é reservada apenas para falar de algum projeto específico que eu estou trabalhando.
 
 Esse blog está em construção!!
 
