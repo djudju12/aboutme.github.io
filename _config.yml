@@ -1,8 +1,8 @@
 # Setup
 title: "Jonathan Santos"
 
-baseurl: "/aboutme.github.io"
-url: ""
+baseurl: "aboutme.github.io"
+url: 
 
 # Settings
 markdown: kramdown
