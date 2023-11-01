@@ -1,7 +1,7 @@
 # Setup
-title: 'Jonathan Santos'
+title: "Jonathan Santos"
 
-baseurl: /
+baseurl: "aboutme.github.io"
 url: "https://djudju12.github.io/aboutme.github.io/"
 
 # Settings
@@ -15,9 +15,9 @@ future: true
 
 # collections
 collections:
-  'projects':
+  "projects":
     output: true
-  'mposts':
+  "mposts":
     output: true
 
 # Excludes
