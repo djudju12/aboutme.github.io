@@ -16,7 +16,7 @@ Em construção!
       <li>
         <strong>{{ project.date | date: '%y-%m-%d' }}</strong>:
         {% if project.ready %}
-          <a href="{{ project.url }}">{{ project.title }}</a>
+          <a href="{{ site.baseurl }}/{{ project.url }}">{{ project.title }}</a>
         {% endif %}
         {% if project.details %}
           <br>
