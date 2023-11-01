@@ -13,7 +13,7 @@ excerpt: '' # work around a bug
       <li>
         <strong>{{ project.date | date: '%y-%m-%d' }}</strong>:
         {% if project.ready %}
-          <a href="{{ site.baseurl }}/{{ project.url }}">{{ project.title }}</a>
+          <a href="{{ project.url }}">{{ project.title }}</a>
         {% endif %}
         {% if project.details %}
           <br>
