@@ -8,12 +8,12 @@ layout: null
     <title>
       {{ site.title }} -- {{ page.title }}
     </title>
-    <meta http-equiv="refresh" content="0; url=/{{ site.baseurl }}/{{ page.redirect }}/2///">
+    <meta http-equiv="refresh" content="0; url={{ page.redirect }}">
   </head>
   <body>
     <script>
-      window.location = 'maluco';
+      window.location = '{{ page.redirect }}';
     </script>
-    <p>Redirecting you to <a href="/{{ site.baseurl }}/{{ page.redirect }}/1/">{{ page.redirect }}</a></p>
+    <p>Redirecting you to <a href="{{ page.redirect }}">{{ page.redirect }}</a></p>
   </body>
 </html>
