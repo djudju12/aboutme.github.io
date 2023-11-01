@@ -23,7 +23,7 @@ Segue um printizinho da resposta da API:
 
 O serviço de pedidos de longe é o mais interessante, afinal ele se comunicava com outros três serviços diferentes de forma síncrona. Para fazer um pedido primeiro era necessário validar o usuário com o serviço de autenticação, depois validar o endereço fornecido através da API do via-cep e ainda buscar as informações dos produtos no microsserviço de produtos. A comunicação entre os microsserviços foi feita através do Apache Kafka (primeira vez tocando nele) e, para se comunicar com o Via-cep foi utilizado o [Feign](https://spring.io/projects/spring-cloud-openfeign).
 
-![resposta api produtos]("/{{ site.baseurl }}/assets/media/postman-orders-all.png")
+<img src="/{{ site.baseurl }}/assets/media/postman-orders-all.png"/>
 
 A experiência com o Kafka foi bem desafiadora... Compreendia de forma superficial os tipos de comunicação que poderiam existir em um sistema distribuído e fui implementando conforme ia aprendendo mais. No fim, deu certo (_in the happy case_)!
 
