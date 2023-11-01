@@ -1,147 +1,39 @@
 ---
 layout: project
 title: "Desafio Técnico: Microsserviços em Java"
-date: 2023-06-31
+date: 2023-11-01
 ready: true
-src: "https://github.com/djudju12"
+src: "https://github.com/djudju12/CompassUOL_SP_Challenge03_Jonathan_Santos"
 details: "Autenticação"
 ---
 
-Esse projeto foi desenvolvido para o programa de bolsas da Compass UOL. Consiste em uma API que simula um e-commerce e permite o gerenciamento de produtos, pedidos e autenticação do usuário. 
+Esse projeto foi desenvolvido para o programa de bolsas da CompassUOL. Consiste em uma API que simula um e-commerce e permite o gerenciamento de produtos, pedidos e autenticação do usuário. Desenvolvido com Spring Boot e documentado utilizando Swagger, o sistema foi desenvolvido em uma arquitetura de microsserviços (afinal esse o desafio). Vou comentar um pouco sobre o que eu achei mais interessante, mas se quiser saber mais sobre os outros componentes o código estará disponível.
 
-**Muito do que foi desenvolvido será omitido por simplicidade. Verifique o código fonte para mais detalhes.**
-# Autenticação
+### Autenticação
 
-A autenticação do usuário foi feita utilizando JWT (você pode checar meu post sobre jwt aqui -> [coming son]()). Vou falar um pouco sobre o processo de autenticação e como o token é gerado.
+Durante a bolsa estudamos alguns modos diferentes de fazer a autenticação do usuário. Em desafios anteriores, tive a oportunidade de utilizar frameworks como [Spring Authorization Server](https://spring.io/projects/spring-authorization-server), por esse motivo escolhi fazer de uma forma mais simples dessa vez.
 
-Primeiramente, vamos dar uma olhada para a classe do usuário:
+Utilizando apenas o Spring Security e uma biblioteca específica para JWT, foi possível implementar um sistema de autenticação utilizando tokens. A abordagem mais simples é também muito didática, digo isto pois vários diversos conceitos sobre tokens, autenticação e sobre o próprio funcionamento do Spring só puderam ser entendidos totalmente dessa forma. 
 
-```java
-@Data
-@Entity
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+Segue um printizinho da resposta da API:
 
-    private String firstName;
+![resposta api auth](/assets/media/token.png "auth")
 
-    private String lastName;
+### Pedidos
 
-    @Column(nullable = false, unique = true)
-    private String username;
+O serviço de pedidos de longe é o mais interessante, afinal ele se comunicava com outros três serviços diferentes de forma síncrona. Para fazer um pedido primeiro era necessário validar o usuário com o serviço de autenticação, depois validar o endereço fornecido através da API do via-cep e ainda buscar as informações dos produtos no microsserviço de produtos. A comunicação entre os microsserviços foi feita através do Apache Kafka (primeira vez tocando nele) e, para se comunicar com o Via-cep foi utilizado o [Feign](https://spring.io/projects/spring-cloud-openfeign).
 
-    @Column(nullable = false)
-    private String password;
-}
-```
+![resposta api produtos](/assets/media/postman-orders-all.png)
 
-O usuário foi modelado de maneira simples, afinal o foco do projeto era mais didático. A senha é armazenada no banco de dados de maneira criptografada utilizando o BCrypt. Para utilizar o BCrypt é necessário apenas criar o seguinte bean em uma classe de configuração:
+A experiência com o Kafka foi bem desafiadora... Compreendia de forma superficial os tipos de comunicação que poderiam existir em um sistema distribuído e fui implementando conforme ia aprendendo mais. No fim, deu certo (_in the happy case_)!
 
-```java
-@Configuration
-public class SecurityConfig {
-    @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-}
-```
+Depois do desafio concluído voltei ao Kafka para entende-lo melhor, mexi com o Avro para a serialização etc... É uma tecnologia incrível e fiquei muito feliz de ter a oportunidade de experimenta-lo com o apoio de pessoas capacitadas.
 
-Para gerar o token foi utilizada a biblioteca [io.jsonwebtoken](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api). A classe é a seguinte:
+Fica um artigozinho legal que me ajudou e talvez te ajude também se você não manja muito: [Artigo Kafka que me ajudou :)](https://medium.com/@douglsantos/apache-kafka-trabalhando-com-convers%C3%B5es-do-avro-schema-2aa11b382af8)
 
-```java
-@Component
-public class JwtTokenProvider {
-    public String generateJwtToken(Authentication authentication, String secret, long expirationMs) {
-        // Dados do usuário que está sendo autenticado
-        String username = authentication.getName();
-        Date currentDate = new Date();
-        Date expiredDate = new Date(currentDate.getTime() + expirationMs);
+### Concluindo
 
-        // Gerando o token
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(currentDate)
-                .setExpiration(expiredDate)
-                .signWith(key(secret))
-                .compact();
-    }
+Antes de mais nada: deixei de fora algumas outras tecnologias utilizadas como o Docker, o Postman... e também não falei dos testes unitários/integração. Queria fazer um post rápido, mas ta tudinho lá no GitHub.
 
-    private Key key(String jwtSecret) {
-        return Keys.hmacShaKeyFor(
-                Decoders.BASE64.decode(jwtSecret)
-        );
-    }
-}
-```
+Agora sim... Concluindo, esse foi o segundo desafio de microsserviços da bolsa, mas com toda certeza foi o que eu tirei melhor proveito. Tinha algumas expectativas, como desenvolver funcionalidades além do que foi proposto, porém o que eu aprendi de verdade é que sistemas distribuídos são muito difíceis e que você deve respeitá-los. No momento, estou estudando o livro [Criando Microsserviços](https://www.amazon.com.br/Criando-Microsservi%C3%A7os-Projetando-Componentes-Especializados/dp/6586057884/ref=asc_df_6586057884/?tag=googleshopp00-20&linkCode=df0&hvadid=379748659420&hvpos=&hvnetw=g&hvrand=8647102754583414513&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9102544&hvtargid=pla-1646134392410&psc=1) e minha mente abriu bastante para o tema e já tenho vários planos para refazer totalmente esse desafio. Quem sabe no futuro eu não faço um outro post. Obrigado!
 
-Com o habilidade de gerar um token, podemos criar um endpoint para autenticar o usuário:
-
-```java
-@RestController
-public class SecurityController {
-
-    private final AuthService authService;
-
-    public SecurityController(AuthService authService) {
-        this.authService = authService;
-    }
-
-    @PostMapping(value = "/login", produces = "application/json")
-    public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginDto loginDto){
-        // public class LoginDto {
-        //     private String username;
-        //     private String password;
-        // }
-        
-        // Autenticando o usuário
-        String token = authService.login(loginDto);
-        
-        // public class JwtDto {
-        //     private String accessToken;
-        //     private final String tokenType = "Bearer";
-        // }
-
-        // DTO para retornar o token
-        JwtDto jwtAuthResponse = new JwtDto();
-        jwtAuthResponse.setAccessToken(token);
-
-        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.CREATED);
-    }
-}
-```
-
-O controller é responsável por receber as requisições e retornar as respostas. Quem fará de fato o trabalho de autenticação é o service:
-
-```java
-@Service
-@RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
-    private AuthenticationManager authenticationManager;
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Value("${app.jwt.Secret}")
-    private String jwtSecret;
-
-    @Value("${app.jwt.ExpirationMs}")
-    private long jwtExpirationMs;
-
-    @Override
-    public String login(LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getUsername(),
-                        loginDto.getPassword()));
-
-        SecurityContextHolder.getContext()
-                             .setAuthentication(authentication);
-        
-        return jwtTokenProvider.generateJwtToken(
-                    authentication, jwtSecret, jwtExpirationMs);
-    }
-}
-```
-
-Concluindo, o usuário envia as credenciais para o endpoint de login, o service autentica o usuário e gera o token. O token é retornado para o usuário e ele pode utilizá-lo para acessar os endpoints protegidos.

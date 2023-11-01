@@ -2,7 +2,16 @@
 layout: default
 ---
 
+
 <h1 class="title">{{ page.title }}{% if page.subtitle %} <span class="subtitle">{{ page.subtitle }}</span>{% endif %}</h1>
+
+{% if page.src  %}
+<div class="icon">
+  <a href={{page.src}}>
+    <img src="/assets/media/Github-Dark.svg" width="42" height="42"/>
+  </a>
+</div>
+{% endif  %}
 
 {% if page.video.id %}
   <div class="youtube-wrapper" style="padding-bottom: {{ page.video.aspect }}%;">

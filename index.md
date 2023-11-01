@@ -6,6 +6,8 @@ nositetitle: true
 
 Olá! Meu nome é Jonathan e este é o meu blog, sinta-se à vontade para explorá-lo. Na seção de **posts** você vai encontrar um conteúdo diverso, onde eu falo sobre qualquer que eu achei interessante. Já a seção de **projects** é reservada apenas para falar de algum projeto específico que eu estou trabalhando.
 
+Esse blog está em construção!!
+
 # Quem sou eu?
 
 Comecei minha carreira na área de desenvolvimento em 2022, passando por duas empresas diferentes (até o momento). Nesses lugares tive a oportunidade de trabalhar com sistemas distintos, o que me proporcionou um grande aprendizado. Tive experiência com  sistemas monolítico legados e, em outra, desenvolvi serviços webs em arquiteturas de microsserviços.

@@ -187,6 +187,12 @@ hr {
   text-align: center;
 }
 
+.icon {
+  text-align: left;
+  width: 42px;
+  height: 42px;
+}
+
 .gap {
   margin-top: 4rem;
   margin-bottom: 4rem;
