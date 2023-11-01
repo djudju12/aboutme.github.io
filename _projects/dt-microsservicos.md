@@ -17,7 +17,7 @@ Utilizando apenas o Spring Security e uma biblioteca específica para JWT, foi p
 
 Segue um printizinho da resposta da API:
 
-![resposta api auth]("/{{ site.baseurl }}/assets/media/token.png" "auth")
+<img src="/{{ site.baseurl }}/assets/media/token.png"/>
 
 ### Pedidos
 
